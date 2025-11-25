@@ -1,8 +1,24 @@
 """Database module for To-Do List application using SQLite."""
-import sqlite3
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+
+from models import Base, Task
+
+# Create engine once
+engine = create_engine('sqlite:///todo.db?check_same_thread=False', echo=True)
+
+# Create tables
+Base.metadata.create_all(engine)
 
 def get_db():
-    """Establishes a connection to the SQLite database and returns the connection object."""
+    """Returns a database session."""
 
-    conn = sqlite3.connect('sqlite:///todo.db?check_same_thread=False')
-    return conn
+    return Session(engine)
+
+def get_all_tasks():
+    """Fetches all tasks from the database."""
+
+    with get_db() as session:
+        tasks = session.query(Task).all()
+        return tasks
