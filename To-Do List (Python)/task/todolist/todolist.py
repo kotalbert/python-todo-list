@@ -12,7 +12,7 @@ def main():
         handle_command()
 
 
-def display_all_tasks():
+def display_all_tasks() -> None:
      tasks = get_all_tasks()
      if len(tasks) == 0:
          print('Nothing to do!')
@@ -39,18 +39,18 @@ def handle_command() -> None:
         print("Invalid option")
 
 
-def end_program():
+def end_program() -> None:
     print("Bye!")
     sys.exit(0)
 
 
-def enter_task():
+def enter_task() -> None:
     print("Enter a task")
     task = input()
     add_task(task)
 
 
-def display_today_tasks():
+def display_today_tasks() -> None:
     today = datetime.today()
     day = today.strftime("%d")
     month = today.strftime("%b")

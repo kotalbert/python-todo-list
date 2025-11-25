@@ -12,12 +12,12 @@ engine = create_engine('sqlite:///todo.db?check_same_thread=False')
 # Create tables
 Base.metadata.create_all(engine)
 
-def get_db():
+def get_db() -> Session:
     """Returns a database session."""
 
     return Session(engine)
 
-def get_all_tasks():
+def get_all_tasks()-> list[type[Task]]:
     """Fetches all tasks from the database."""
 
     with get_db() as session:
@@ -32,7 +32,7 @@ def add_task(task: str) -> None:
         session.add(new_task)
         session.commit()
 
-def get_today_tasks():
+def get_today_tasks() -> list[type[Task]]:
     """Fetches today's tasks from the database."""
 
     today = datetime.today().date()
