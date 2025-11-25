@@ -2,14 +2,16 @@
 from datetime import date
 
 from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
 
+class Base(DeclarativeBase):
+    """Base class for declarative models."""
+    pass
 
 class Task(Base):
     """Model for a task in the to-do list."""
-    __tablename__ = 'tasks'
+    __tablename__ = 'task'
 
     id = Column(Integer, primary_key=True)
     task = Column(String, nullable=False)

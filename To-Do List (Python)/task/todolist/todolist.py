@@ -1,5 +1,6 @@
 """Main module for the To-Do List application."""
-from db import get_all_tasks
+from db import get_all_tasks, add_task
+
 import sys
 
 
@@ -15,9 +16,15 @@ def handle_command() -> None:
     command = input()
     if command == '1':
         print("Today's tasks")
-        print(get_all_tasks())
+        tasks = get_all_tasks()
+        if len(tasks) == 0:
+            print('Nothing to do!')
+        for t in tasks:
+            print(f"{t.id}. {t.task}")
     elif command == '2':
-        print("Add a task")
+        print("Enter a task")
+        task = input()
+        add_task(task)
     elif command == '0':
         print("Bye!")
         sys.exit(0)
