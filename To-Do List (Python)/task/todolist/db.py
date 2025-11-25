@@ -50,3 +50,13 @@ def get_task_by_date(target_date: date) -> list[type[Task]]:
     with get_db() as session:
         tasks = session.query(Task).filter(Task.deadline == target_date).all()
         return tasks
+
+
+def get_missed_tasks() -> list[type[Task]]:
+    """Fetches missed tasks from the database."""
+
+    today = datetime.today().date()
+
+    with get_db() as session:
+        tasks = session.query(Task).filter(Task.deadline < today).order_by(Task.deadline).all()
+        return tasks

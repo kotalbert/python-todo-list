@@ -2,7 +2,7 @@
 import sys
 from datetime import datetime, timedelta
 
-from db import get_all_tasks, add_task, get_today_tasks, get_task_by_date
+from db import get_all_tasks, add_task, get_today_tasks, get_task_by_date, get_missed_tasks
 
 
 def main():
@@ -38,6 +38,17 @@ def display_week_tasks():
         print()
 
 
+def display_missed_tasks():
+    tasks = get_missed_tasks()
+    if len(tasks) == 0:
+        print("All tasks have been completed!")
+    for i, t in enumerate(tasks):
+        month = t.deadline.strftime("%b")
+        day = t.deadline.day
+        d = f"{day} {month}"
+        print(f"{i + 1}. {t.task}. {d}")
+
+
 def handle_command() -> None:
     """Handles user commands for the To-Do List application."""
 
@@ -49,7 +60,11 @@ def handle_command() -> None:
     elif command == '3':
         display_all_tasks()
     elif command == '4':
+        display_missed_tasks()
+    elif command == '5':
         enter_task()
+    elif command == '6':
+        pass
     elif command == '0':
         end_program()
     else:
@@ -89,7 +104,9 @@ def show_menu() -> None:
     print("1) Today's tasks")
     print("2) Week's tasks")
     print("3) All tasks")
-    print("4) Add a task")
+    print("4) Missed tasks")
+    print("5) Add a task")
+    print("6) Delete a task")
     print("0) Exit")
 
 
