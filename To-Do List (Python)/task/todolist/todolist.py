@@ -16,7 +16,9 @@ def display_all_tasks() -> None:
     if len(tasks) == 0:
         print("Nothing to do!")
     for i, t in enumerate(tasks):
-        d = t.deadline.strftime("%d %b")
+        month = t.deadline.strftime("%b")
+        day = t.deadline.day
+        d = f"{day} {month}"
         print(f"{i + 1}. {t.task}. {d}")
 
 
@@ -25,7 +27,7 @@ def display_week_tasks():
         date = datetime.today().date()
         target_date = date + timedelta(days=day)
         day_name = target_date.strftime("%A")
-        day_num = target_date.strftime("%d")
+        day_num = target_date.day
         month = target_date.strftime("%b")
         print(f"{day_name} {day_num} {month}:")
         tasks = get_task_by_date(target_date)
@@ -73,21 +75,21 @@ def enter_task() -> None:
 
 def display_today_tasks() -> None:
     today = datetime.today()
-    day = today.strftime("%d")
+    day = today.day
     month = today.strftime("%b")
     print(f"Today  {day} {month}:")
     tasks = get_today_tasks()
     if len(tasks) == 0:
         print('Nothing to do!')
-    for t in tasks:
-        print(f"{t.id}. {t.task}")
+    for i, t in enumerate(tasks):
+        print(f"{i + 1}. {t.task}")
 
 
 def show_menu() -> None:
     print("1) Today's tasks")
     print("2) Week's tasks")
     print("3) All tasks")
-    print("4) Add task")
+    print("4) Add a task")
     print("0) Exit")
 
 

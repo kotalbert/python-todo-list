@@ -20,8 +20,8 @@ def get_db() -> Session:
 def get_all_tasks()-> list[type[Task]]:
     """Fetches all tasks from the database."""
 
-    with get_db() as session:
-        tasks = session.query(Task).all()
+    with (get_db() as session):
+        tasks = session.query(Task).order_by(Task.deadline).all()
         return tasks
 
 
