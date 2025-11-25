@@ -1,7 +1,8 @@
 """Main module for the To-Do List application."""
-from db import get_all_tasks, add_task
-
 import sys
+from datetime import datetime
+
+from db import get_all_tasks, add_task, get_today_tasks
 
 
 def main():
@@ -10,6 +11,16 @@ def main():
         show_menu()
         handle_command()
 
+
+def display_all_tasks():
+     tasks = get_all_tasks()
+     if len(tasks) == 0:
+         print('Nothing to do!')
+     for i, t in enumerate(tasks):
+         d = t.deadline.strftime("%d %b")
+         print(f"{i+1}. {t.task}. {d}")
+
+
 def handle_command() -> None:
     """Handles user commands for the To-Do List application."""
 
@@ -17,6 +28,10 @@ def handle_command() -> None:
     if command == '1':
         display_today_tasks()
     elif command == '2':
+        pass
+    elif command == '3':
+        display_all_tasks()
+    elif command == '4':
         enter_task()
     elif command == '0':
         end_program()
@@ -36,8 +51,11 @@ def enter_task():
 
 
 def display_today_tasks():
-    print("Today's tasks")
-    tasks = get_all_tasks()
+    today = datetime.today()
+    day = today.strftime("%d")
+    month = today.strftime("%b")
+    print(f"Today  {day} {month}:")
+    tasks = get_today_tasks()
     if len(tasks) == 0:
         print('Nothing to do!')
     for t in tasks:
@@ -46,7 +64,9 @@ def display_today_tasks():
 
 def show_menu() -> None:
     print("1) Today's tasks")
-    print("2) Add a task")
+    print("2) Week's tasks")
+    print("3) All tasks")
+    print("4) Add task")
     print("0) Exit")
 
 
