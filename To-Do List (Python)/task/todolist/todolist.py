@@ -62,7 +62,13 @@ def end_program() -> None:
 def enter_task() -> None:
     print("Enter a task")
     task = input()
-    add_task(task)
+    print("Enter a deadline")
+    deadline_str = input()
+    try:
+        deadline_date = datetime.strptime(deadline_str, "%Y-%m-%d")
+        add_task(task, deadline_date)
+    except ValueError:
+        print("Invalid date format. Please use YYYY-MM-DD.")
 
 
 def display_today_tasks() -> None:

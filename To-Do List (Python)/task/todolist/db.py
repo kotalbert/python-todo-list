@@ -1,5 +1,5 @@
 """Database module for To-Do List application using SQLite."""
-from datetime import datetime, timedelta, date
+from datetime import datetime, date
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -24,11 +24,14 @@ def get_all_tasks()-> list[type[Task]]:
         tasks = session.query(Task).all()
         return tasks
 
-def add_task(task: str) -> None:
+
+def add_task(task: str, deadline: date = None) -> None:
     """Adds a new task to the database."""
+    if deadline is None:
+        deadline = datetime.today().date()
 
     with get_db() as session:
-        new_task = Task(task=task)
+        new_task = Task(task=task, deadline=deadline)
         session.add(new_task)
         session.commit()
 
