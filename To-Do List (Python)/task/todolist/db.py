@@ -1,5 +1,5 @@
 """Database module for To-Do List application using SQLite."""
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -39,4 +39,11 @@ def get_today_tasks() -> list[type[Task]]:
 
     with get_db() as session:
         tasks = session.query(Task).filter(Task.deadline == today).all()
+        return tasks
+
+def get_task_by_date(target_date: date) -> list[type[Task]]:
+    """Fetches tasks for a specific date from the database."""
+
+    with get_db() as session:
+        tasks = session.query(Task).filter(Task.deadline == target_date).all()
         return tasks
