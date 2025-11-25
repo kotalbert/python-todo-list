@@ -15,21 +15,33 @@ def handle_command() -> None:
 
     command = input()
     if command == '1':
-        print("Today's tasks")
-        tasks = get_all_tasks()
-        if len(tasks) == 0:
-            print('Nothing to do!')
-        for t in tasks:
-            print(f"{t.id}. {t.task}")
+        display_today_tasks()
     elif command == '2':
-        print("Enter a task")
-        task = input()
-        add_task(task)
+        enter_task()
     elif command == '0':
-        print("Bye!")
-        sys.exit(0)
+        end_program()
     else:
         print("Invalid option")
+
+
+def end_program():
+    print("Bye!")
+    sys.exit(0)
+
+
+def enter_task():
+    print("Enter a task")
+    task = input()
+    add_task(task)
+
+
+def display_today_tasks():
+    print("Today's tasks")
+    tasks = get_all_tasks()
+    if len(tasks) == 0:
+        print('Nothing to do!')
+    for t in tasks:
+        print(f"{t.id}. {t.task}")
 
 
 def show_menu() -> None:
