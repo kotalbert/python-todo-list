@@ -6,35 +6,34 @@ from db import get_all_tasks, add_task, get_today_tasks, get_task_by_date
 
 
 def main():
-
     while True:
         show_menu()
         handle_command()
 
 
 def display_all_tasks() -> None:
-     tasks = get_all_tasks()
-     if len(tasks) == 0:
-         print("Nothing to do!")
-     for i, t in enumerate(tasks):
-         d = t.deadline.strftime("%d %b")
-         print(f"{i+1}. {t.task}. {d}")
+    tasks = get_all_tasks()
+    if len(tasks) == 0:
+        print("Nothing to do!")
+    for i, t in enumerate(tasks):
+        d = t.deadline.strftime("%d %b")
+        print(f"{i + 1}. {t.task}. {d}")
 
 
 def display_week_tasks():
-     for day in range(7):
-         date = datetime.today().date()
-         target_date = date + timedelta(days=day)
-         day_name = target_date.strftime("%A")
-         day_num = target_date.strftime("%d")
-         month = target_date.strftime("%b")
-         print(f"{day_name} {day_num} {month}:")
-         tasks = get_task_by_date(target_date)
-         if len(tasks) == 0:
-             print("Nothing to do!")
-         for i, t in enumerate(tasks):
-             print(f"{i+1}. {t.task}.")
-         print()
+    for day in range(7):
+        date = datetime.today().date()
+        target_date = date + timedelta(days=day)
+        day_name = target_date.strftime("%A")
+        day_num = target_date.strftime("%d")
+        month = target_date.strftime("%b")
+        print(f"{day_name} {day_num} {month}:")
+        tasks = get_task_by_date(target_date)
+        if len(tasks) == 0:
+            print("Nothing to do!")
+        for i, t in enumerate(tasks):
+            print(f"{i + 1}. {t.task}.")
+        print()
 
 
 def handle_command() -> None:
