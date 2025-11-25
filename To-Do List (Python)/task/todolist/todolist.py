@@ -2,7 +2,7 @@
 import sys
 from datetime import datetime, timedelta
 
-from db import get_all_tasks, add_task, get_today_tasks, get_task_by_date, get_missed_tasks
+from db import get_all_tasks, add_task, get_today_tasks, get_task_by_date, get_missed_tasks, delete_task_by_id
 
 
 def main():
@@ -42,11 +42,28 @@ def display_missed_tasks():
     tasks = get_missed_tasks()
     if len(tasks) == 0:
         print("All tasks have been completed!")
+    print("Missed tasks:")
     for i, t in enumerate(tasks):
         month = t.deadline.strftime("%b")
         day = t.deadline.day
         d = f"{day} {month}"
         print(f"{i + 1}. {t.task}. {d}")
+    print()
+
+
+def delete_task():
+    tasks = get_all_tasks()
+    if len(tasks) == 0:
+        print("Nothing to delete")
+        return
+    print("Choose the number of the task you want to delete:")
+    for i, t in enumerate(tasks):
+        month = t.deadline.strftime("%b")
+        day = t.deadline.day
+        d = f"{day} {month}"
+        print(f"{t.id}. {t.task}. {d}")
+    delete_task_by_id(t.id)
+    print("The task has been deleted!")
 
 
 def handle_command() -> None:
@@ -64,7 +81,7 @@ def handle_command() -> None:
     elif command == '5':
         enter_task()
     elif command == '6':
-        pass
+        delete_task()
     elif command == '0':
         end_program()
     else:

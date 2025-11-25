@@ -60,3 +60,13 @@ def get_missed_tasks() -> list[type[Task]]:
     with get_db() as session:
         tasks = session.query(Task).filter(Task.deadline < today).order_by(Task.deadline).all()
         return tasks
+
+
+def delete_task_by_id(task_id: int) -> None:
+    """Deletes a task from the database by its ID."""
+
+    with get_db() as session:
+        task_to_delete = session.query(Task).filter(Task.id == task_id).first()
+        if task_to_delete:
+            session.delete(task_to_delete)
+            session.commit()
